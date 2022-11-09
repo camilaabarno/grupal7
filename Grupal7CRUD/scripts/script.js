@@ -50,8 +50,8 @@ agregar.addEventListener("click", () => {
     console.log(inputNombre.value);
     fetch(APIURL + "/users", {
         method: "POST",
-        headers: {"Content-Type": "aplication/json"},
-        body: JSON.stringify({name: `${inputNombre.value}`, lastname: `${inputApellido.value}`})
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({"name": inputNombre.value, "lastname": inputApellido.value})
     })
     .then(response => response.json())
     .then(dataResponse=>console.log(dataResponse))
