@@ -9,52 +9,66 @@ const inputPutNombre = document.getElementById("inputPutNombre");
 const inputPutApellido = document.getElementById("inputPutApellido");
 const modificar = document.getElementById("btnPut");
 const inputPutId = document.getElementById("inputPutId");
+const btnSendChanges = document.getElementById("btnSendChanges");
 
-fetch(APIURL + "/users").then(function (response) {
-    return response.json();
-}).then(function (data) {
-    console.log(data);
-    mostrar(data);
+//BUSCA DATOS EN EL SERVIDOR
+botonBuscar.addEventListener("click", () => {
+    mostrarListado();
+    results.innerHTML = ``;
 });
 
-    modificar.addEventListener("click", ()=>{
-        fetch(APIURL + "/users/" + inputPutId.value, {
-            method: "PUT",
-            headers: {"Content-Type": "aplication/json"},
-            body: JSON.stringify({id: inputPutId.value})
-        })
-        .then(response => response.json())
-        .then(dataResponse=>console.log(dataResponse))
-        .catch(error=>alert("ocurrióo un error"))
-    })
-    
-function mostrar(data) {
-    botonBuscar.addEventListener("click", () => {
-        results.innerHTML = ``;
+function mostrarListado() {
+    fetch(APIURL + "/users").then(function (response) {
+        return response.json();
+    }).then(function (data) {
         for (person of data) {
             if (inputbuscar.value == "") {
                 results.innerHTML += `<p> name: ${person.name}<br>
-                lastname: ${person.lastname}<br> 
-                id: ${person.id}</p> `;
-            }if (inputbuscar.value == person.id) {
+            lastname: ${person.lastname}<br> 
+            id: ${person.id}</p> `;
+            } if (inputbuscar.value == person.id) {
                 results.innerHTML = `<p> name: ${person.name}<br>
-                lastname: ${person.lastname}<br> 
-                id: ${person.id}</p> `;
-            } 
+            lastname: ${person.lastname}<br> 
+            id: ${person.id}</p> `;
+            }
         }
-    }
-    )
-}
-//enviar datos al servidor
+    })
+};
+
+//AGREGA DATOS AL SERVIDOR
 agregar.addEventListener("click", () => {
     console.log(inputNombre.value);
     fetch(APIURL + "/users", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({"name": inputNombre.value, "lastname": inputApellido.value})
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "name": inputNombre.value, "lastname": inputApellido.value })
     })
-    .then(response => response.json())
-    .then(dataResponse=>console.log(dataResponse))
-    .catch(error=>alert("ocurrióo un error"))
-})
+        .then(response => response.json())
+        .then(dataResponse => console.log(dataResponse))
+        .catch(error => alert("ocurrióo un error"))
+});
 
+
+
+//MODIFICA DATOS EN SERVIDOR
+modificar.addEventListener("click", () => {
+    fetch(APIURL + "/users/" + inputPutId.value, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+
+    })
+        .then(response => response.json())
+        .then(dataResponse => {
+            inputPutNombre.value = dataResponse.name;
+            inputPutApellido.value = dataResponse.lastname;
+            btnSendChanges.addEventListener("click", () => {
+                fetch(APIURL + "/users/" + inputPutId.value, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: inputPutId.value, name: inputPutNombre.value, lastname: inputPutApellido.value })
+                })
+                mostrarListado();
+            })
+        })
+        .catch(error => alert("ocurrióo un error"))
+});
