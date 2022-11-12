@@ -30,8 +30,8 @@
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="post-box">
                             <h6>Ingresar nuevo registro</h6>
-                            <input type="text" id="inputPostNombre" class="form-control my-1" placeholder="Nombre" oninput="habilitado()">
-                            <input type="text" id="inputPostApellido" class="form-control my-1" placeholder="Apellido" oninput="habilitado()">
+                            <input type="text" id="inputPostNombre" class="form-control my-1" placeholder="Nombre" oninput="inputHabilitado()">
+                            <input type="text" id="inputPostApellido" class="form-control my-1" placeholder="Apellido" oninput="inputHabilitado()">
                             <button id="btnPost" class="btn btn-success position-absolute bottom-0 mb-3" disabled>
                                 Agregar</button>
                         </div>
@@ -42,15 +42,16 @@
                         <div class="border p-3 my-3 position-relative" id="put-box">
                             <h6>Modificar registro</h6>
                             <input type="number" id="inputPutId" class="form-control"
-                                placeholder="ID del registro a modificar" oninput="habilitado()">
-                            <button id="btnPut" class="btn btn-warning position-absolute bottom-0 mb-3" data-bs-toggle="modal" data-bs-target="#dataModal" disabled>
+                                placeholder="ID del registro a modificar" oninput="inputHabilitado()">
+                            <button id="btnPut" class="btn btn-warning position-absolute bottom-0 mb-3" disabled> 
+                                <!--data-bs-toggle="modal" data-bs-target="#dataModal" -->
                                 Modificar</button>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="border p-3 my-3 position-relative" id="delete-box">
                             <h6>Eliminar registro</h6>
-                            <input type="number" id="inputDelete" class="form-control" placeholder="ID a eliminar" oninput="habilitado()"">
+                            <input type="number" id="inputDelete" class="form-control" placeholder="ID a eliminar" oninput="inputHabilitado()"">
                             <button id="btnDelete" class="btn btn-danger position-absolute bottom-0 mb-3" disabled>
                                 Borrar</button>
                         </div>
@@ -58,7 +59,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <ul class="border bg-dark text-white my-3 list-group list-group-flush" id="results"></ul>
+                <ul class="border bg-dark text-white my-3 list-group list-group-flush" id="resultsDiv"></ul>
             </div>
         </div>
     </main>
@@ -80,12 +81,13 @@
                     <input type="text" id="inputPutApellido" class="form-control my-1">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelModify()">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="btnSendChanges" data-bs-dismiss="modal" >Guardar</button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="scripts/bootstrap.bundle.js"></script>
     <script src="scripts/script.js"></script>
 </body>
